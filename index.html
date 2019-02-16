@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Soulmate vs Work It Out</title>
+    <script src="https://unpkg.com/vue"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div v-if="soulmateShown">
+            <button v-on:click="soulmateShown=false">Go to Work It Out quiz</button>
+            <h1>Soulmate quiz</h1>
+            <ol>
+                <radio-question 
+                    v-for="question in soulmateQuestions" 
+                    :question="question"
+                    :key="question.id"
+                ></radio-question>
+            </ol>
+            <h3>{{soulmateScoreText}}</h3>
+            <h4 v-if="soulmatePercentage !== undefined">{{soulmatePercentage}}% Soulmate Believer</h4>
+        </div>
+        <div v-if="!soulmateShown">
+            <button v-on:click="soulmateShown=true">Go to Soulmate quiz</button>
+            <h1>Work It Out quiz</h1>
+            <ol>
+                <radio-question 
+                    v-for="question in workItOutQuestions" 
+                    :question="question"
+                    :key="question.id"
+                ></radio-question>
+            </ol>
+            <h3>{{workItOutScoreText}}</h3>
+            <h4 v-if="workItOutPercentage !== undefined">{{workItOutPercentage}}% Work It Out Believer</h4>
+        </div>
+    </div>
+
+    <div style="padding-top:200px;">Icons made by <a href="https://www.freepik.com/" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" 			    title="Flaticon">www.flaticon.com</a> is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" 			    title="Creative Commons BY 3.0" target="_blank">CC 3.0 BY</a></div>
+
+    <script src="./util.js"></script>
+    <script src="./answers_util.js"></script>
+    <script src="./answers.js"></script>
+    <script src="./questions_util.js"></script>
+    <script src="./questions.js"></script>
+    <script src="./components.js"></script>
+
+    <script>
+        let app = new Vue({
+            el: '#app',
+            data: {
+                soulmateShown: true,
+                soulmateQuestions: getSoulmateQuestions(),
+                workItOutQuestions: getWorkItOutQuestions(),
+            },
+            computed: {
+                soulmateScoreText: function() {
+                    return getScoreText(this.soulmateQuestions);
+                },
+                soulmatePercentage: function() {
+                    return getScorePercentage(this.soulmateQuestions);
+                },
+                workItOutScoreText: function() {
+                    return getScoreText(this.workItOutQuestions);
+                },
+                workItOutPercentage: function() {
+                    return getScorePercentage(this.workItOutQuestions);
+                }
+            },
+        });
+
+    </script>
+</body>
+
+</html>
